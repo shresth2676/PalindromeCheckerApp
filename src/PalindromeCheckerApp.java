@@ -1,16 +1,19 @@
+
+import java.util.Stack;
 public class PalindromeCheckerApp {
     public static boolean isPalindrome(String input) {
-        char[] chars = input.toCharArray();
-        int start = 0;
-        int end = chars.length - 1;
+        Stack<Character> stack = new Stack<>();
 
-        while (start < end) {
-            if (chars[start] != chars[end]) {
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
+
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
-            start++;
-            end--;
         }
+
         return true;
     }
 
@@ -23,6 +26,7 @@ public class PalindromeCheckerApp {
             System.out.println("Not a Palindrome");
         }
     }
+}
 }
 
 
