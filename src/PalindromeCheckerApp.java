@@ -1,20 +1,35 @@
-class PalindromeChecker {
+import java.util.*;
 
+interface PalindromeStrategy {
+    boolean checkPalindrome(String input);
+}
+
+class StackStrategy implements PalindromeStrategy {
     public boolean checkPalindrome(String input) {
-
-        char[] chars = input.toCharArray();
-
-        int start = 0;
-        int end = chars.length - 1;
-
-        while (start < end) {
-            if (chars[start] != chars[end]) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
-            start++;
-            end--;
         }
+        return true;
+    }
+}
 
+class DequeStrategy implements PalindromeStrategy {
+    public boolean checkPalindrome(String input) {
+        Deque<Character> deque = new LinkedList<>();
+        for (char c : input.toCharArray()) {
+            deque.addLast(c);
+        }
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
+            }
+        }
         return true;
     }
 }
@@ -25,9 +40,10 @@ public class PalindromeCheckerApp {
 
         String input = "madam";
 
-        PalindromeChecker checker = new PalindromeChecker();
+        PalindromeStrategy strategy = new StackStrategy();
+        // PalindromeStrategy strategy = new DequeStrategy();
 
-        boolean result = checker.checkPalindrome(input);
+        boolean result = strategy.checkPalindrome(input);
 
         if (result) {
             System.out.println("Palindrome");
