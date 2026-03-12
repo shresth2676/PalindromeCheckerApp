@@ -1,11 +1,23 @@
 import java.util.*;
 
-interface PalindromeStrategy {
-    boolean checkPalindrome(String input);
-}
+public class PalindromeCheckerApp {
 
-class StackStrategy implements PalindromeStrategy {
-    public boolean checkPalindrome(String input) {
+    static boolean arrayMethod(String input) {
+        char[] chars = input.toCharArray();
+        int start = 0;
+        int end = chars.length - 1;
+
+        while (start < end) {
+            if (chars[start] != chars[end]) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    static boolean stackMethod(String input) {
         Stack<Character> stack = new Stack<>();
         for (char c : input.toCharArray()) {
             stack.push(c);
@@ -17,10 +29,8 @@ class StackStrategy implements PalindromeStrategy {
         }
         return true;
     }
-}
 
-class DequeStrategy implements PalindromeStrategy {
-    public boolean checkPalindrome(String input) {
+    static boolean dequeMethod(String input) {
         Deque<Character> deque = new LinkedList<>();
         for (char c : input.toCharArray()) {
             deque.addLast(c);
@@ -32,23 +42,26 @@ class DequeStrategy implements PalindromeStrategy {
         }
         return true;
     }
-}
-
-public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         String input = "madam";
 
-        PalindromeStrategy strategy = new StackStrategy();
-        // PalindromeStrategy strategy = new DequeStrategy();
+        long startTime, endTime;
 
-        boolean result = strategy.checkPalindrome(input);
+        startTime = System.nanoTime();
+        boolean result1 = arrayMethod(input);
+        endTime = System.nanoTime();
+        System.out.println("Array Method: " + result1 + " Time: " + (endTime - startTime) + " ns");
 
-        if (result) {
-            System.out.println("Palindrome");
-        } else {
-            System.out.println("Not a Palindrome");
-        }
+        startTime = System.nanoTime();
+        boolean result2 = stackMethod(input);
+        endTime = System.nanoTime();
+        System.out.println("Stack Method: " + result2 + " Time: " + (endTime - startTime) + " ns");
+
+        startTime = System.nanoTime();
+        boolean result3 = dequeMethod(input);
+        endTime = System.nanoTime();
+        System.out.println("Deque Method: " + result3 + " Time: " + (endTime - startTime) + " ns");
     }
 }
