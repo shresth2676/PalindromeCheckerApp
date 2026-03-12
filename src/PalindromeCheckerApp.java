@@ -6,12 +6,14 @@ public class PalindromeCheckerApp {
 
         String normalized = input.replaceAll("\\s+", "").toLowerCase();
 
+        char[] chars = normalized.toCharArray();
+
         int start = 0;
-        int end = normalized.length() - 1;
+        int end = chars.length - 1;
         boolean isPalindrome = true;
 
         while (start < end) {
-            if (normalized.charAt(start) != normalized.charAt(end)) {
+            if (chars[start] != chars[end]) {
                 isPalindrome = false;
                 break;
             }
