@@ -1,27 +1,35 @@
-public class PalindromeCheckerApp {
+class PalindromeChecker {
 
-    public static void main(String[] args) {
+    public boolean checkPalindrome(String input) {
 
-        String input = "Madam Im Adam";
-
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
-
-        char[] chars = normalized.toCharArray();
+        char[] chars = input.toCharArray();
 
         int start = 0;
         int end = chars.length - 1;
-        boolean isPalindrome = true;
 
         while (start < end) {
             if (chars[start] != chars[end]) {
-                isPalindrome = false;
-                break;
+                return false;
             }
             start++;
             end--;
         }
 
-        if (isPalindrome) {
+        return true;
+    }
+}
+
+public class PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+
+        String input = "madam";
+
+        PalindromeChecker checker = new PalindromeChecker();
+
+        boolean result = checker.checkPalindrome(input);
+
+        if (result) {
             System.out.println("Palindrome");
         } else {
             System.out.println("Not a Palindrome");
